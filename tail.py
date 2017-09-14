@@ -9,7 +9,6 @@ from datetime import datetime
 
 class Tail(object):
     MAX_SLEEP_COUNT = 2
-    SINGLE_READ = 5210
 
     def __init__(self, tailed_file, start=0):
         self.tailed_file       = tailed_file
@@ -24,9 +23,9 @@ class Tail(object):
                 if self.sleep_count == Tail.MAX_SLEEP_COUNT:
                     return self.curr_position
 
-                readed = file_.readlines(Tail.SINGLE_READ)
+                readed = file_.readline()
                 curr_position = file_.tell()
-                if (curr_position - self.curr_position < Tail.SINGLE_READ):
+                if (curr_position - self.curr_position <= 0):
                     time.sleep(s)
                     self.sleep_count += 1
                 else:

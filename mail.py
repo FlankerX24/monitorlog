@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
+import  sys
 import  smtplib
 from    email.mime.text import MIMEText
 from    email.header import Header
@@ -15,12 +15,12 @@ mail_user       = "user@example.com"
 mail_pass       = "passwd" #ssl认证
 mail_postfix    = "qq.com"
 
-def send_mail(mailto, subject, content):
+def send_mail(mailto, subject, content, From="Robot", To="Developer"):
     me = mail_user + "@" + mail_postfix
     msg = MIMEText(content, 'plain', 'utf-8')
     msg['Subject'] = Header(subject, 'utf-8')
-    msg['From'] = Header("Robot", 'utf-8')
-    msg['To'] = Header("Developer", 'utf-8')
+    msg['From'] = Header(From, 'utf-8')
+    msg['To'] = Header(To, 'utf-8')
     msg["Accept-Language"]="zh-CN"
     msg["Accept-Charset"]="ISO-8859-1,utf-8"
     s = smtplib.SMTP()
@@ -29,10 +29,3 @@ def send_mail(mailto, subject, content):
     s.login(mail_user,mail_pass)
     s.sendmail(me, mailto, msg.as_string())
     s.close()
-
-def main():
-    send_mail(["user@example.com"], "项目日志报警", "文件名：报警如下")
-    pass
-
-if __name__ == "__main__":
-    main()
